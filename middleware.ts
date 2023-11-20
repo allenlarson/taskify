@@ -8,7 +8,7 @@ export default authMiddleware({
   publicRoutes: ['/'],
   afterAuth(auth, req) {
     if (auth.userId && auth.isPublicRoute) {
-      let path = 'select-org';
+      let path = '/select-org';
 
       if (auth.orgId) {
         path = `/organization/${auth.orgId}`;
@@ -17,6 +17,7 @@ export default authMiddleware({
       const orgSelection = new URL(path, req.url);
       return NextResponse.redirect(orgSelection);
     }
+
     if (!auth.userId && !auth.isPublicRoute) {
       return redirectToSignIn({ returnBackUrl: req.url });
     }
