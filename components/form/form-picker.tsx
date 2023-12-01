@@ -9,7 +9,7 @@ import { unsplash } from '@/lib/unsplash';
 import Image from 'next/image';
 import { defaultImages } from '@/constants/images';
 import Link from 'next/link';
-import { FormErrors } from './form.errors';
+import { FormErrors } from './form-errors';
 
 interface FormPickerProps {
   id: string;
