@@ -4,7 +4,6 @@ import { auth } from '@clerk/nextjs';
 import { revalidatePath } from 'next/cache';
 
 import { db } from '@/lib/db';
-
 import { createSafeAction } from '@/lib/create-safe-action';
 
 import { CreateCard } from './schema';
@@ -20,6 +19,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
   }
 
   const { title, boardId, listId } = data;
+
   let card;
 
   try {
@@ -58,7 +58,6 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       error: 'Failed to create.',
     };
   }
-
   revalidatePath(`/board/${boardId}`);
   return { data: card };
 };
