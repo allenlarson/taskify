@@ -56,13 +56,15 @@ export const FormTextarea = forwardRef<HTMLTextAreaElement, FormTextareaProps>(
           <Textarea
             onKeyDown={onKeyDown}
             onBlur={onBlur}
+            onClick={onClick}
             ref={ref}
             required={required}
             placeholder={placeholder}
             name={id}
+            id={id}
             disabled={pending || disabled}
             className={cn(
-              'resize-none focus-visiable:ring-0 focus:visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm',
+              'resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm',
               className
             )}
             aria-describedby={`${id}-error`}
