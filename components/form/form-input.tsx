@@ -6,6 +6,7 @@ import { useFormStatus } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+
 import { FormErrors } from './form-errors';
 
 interface FormInputProps {
@@ -54,6 +55,7 @@ export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             onBlur={onBlur}
             defaultValue={defaultValue}
             ref={ref}
+            required={required}
             name={id}
             id={id}
             placeholder={placeholder}

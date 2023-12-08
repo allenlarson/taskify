@@ -1,27 +1,26 @@
-'use server';
+"use server";
 
-import { auth } from '@clerk/nextjs';
-import { revalidatePath } from 'next/cache';
-import { ACTION, ENTITY_TYPE } from '@prisma/client';
+import { auth } from "@clerk/nextjs";
+import { revalidatePath } from "next/cache";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
-import { db } from '@/lib/db';
-import { createAuditLog } from '@/lib/create-audit-log';
-import { createSafeAction } from '@/lib/create-safe-action';
+import { db } from "@/lib/db";
+import { createAuditLog } from "@/lib/create-audit-log";
+import { createSafeAction } from "@/lib/create-safe-action";
 
-import { CopyCard } from './schema';
-import { InputType, ReturnType } from './types';
+import { CopyCard } from "./schema";
+import { InputType, ReturnType } from "./types";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const { userId, orgId } = auth();
 
   if (!userId || !orgId) {
     return {
-      error: 'Unauthorized',
+      error: "Unauthorized",
     };
   }
 
   const { id, boardId } = data;
-
   let card;
 
   try {
@@ -37,12 +36,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     });
 
     if (!cardToCopy) {
-      return { error: 'Card not found' };
+      return { error: "Card not found" }
     }
+
     const lastCard = await db.card.findFirst({
       where: { listId: cardToCopy.listId },
-      orderBy: { order: 'desc' },
-      select: { order: true },
+      orderBy: { order: "desc" },
+      select: { order: true }
     });
 
     const newOrder = lastCard ? lastCard.order + 1 : 1;
@@ -61,12 +61,13 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       entityId: card.id,
       entityType: ENTITY_TYPE.CARD,
       action: ACTION.CREATE,
-    });
+    })
   } catch (error) {
     return {
-      error: 'Failed to copy.',
-    };
+      error: "Failed to copy."
+    }
   }
+
   revalidatePath(`/board/${boardId}`);
   return { data: card };
 };

@@ -17,6 +17,21 @@ export const metadata: Metadata = {
       href: '/logo.svg',
     },
   ],
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: 'https://taskify-allen-larsons-projects.vercel.app',
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: '/taskifyOG.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

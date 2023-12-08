@@ -11,7 +11,6 @@ import { updateCardOrder } from '@/actions/update-card-order';
 
 import { ListForm } from './list-form';
 import { ListItem } from './list-item';
-import { error } from 'console';
 
 interface ListContainerProps {
   data: ListWithCards[];
