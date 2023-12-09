@@ -22,15 +22,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     url: 'https://taskify-allen-larsons-projects.vercel.app',
     siteName: siteConfig.name,
-    images: [
-      {
-        url: '/opengraph-image',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
   },
 };
 
