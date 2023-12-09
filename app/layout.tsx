@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  metadataBase: new URL('https://taskify-allen-larsons-projects.vercel.app'),
   icons: [
     {
       url: '/logo.svg',
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: siteConfig.name,
     description: siteConfig.description,
-    url: 'https://taskify-allen-larsons-projects.vercel.app',
+    url: 'https://taskify-allen-larsons-projects.vercel.app/',
     siteName: siteConfig.name,
   },
 };
