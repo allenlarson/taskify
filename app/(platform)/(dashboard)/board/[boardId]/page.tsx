@@ -1,4 +1,4 @@
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
 import { db } from '@/lib/db';
@@ -6,13 +6,14 @@ import { db } from '@/lib/db';
 import { ListContainer } from './_components/list-container';
 
 interface BoardIdPageProps {
-  params: {
+  params: Promise<{
     boardId: string;
-  };
+  }>;
 }
 
 const BoardIdPage = async ({ params }: BoardIdPageProps) => {
-  const { orgId } = auth();
+  const { boardId } = await params;
+  const { orgId } = await auth();
 
   if (!orgId) {
     redirect('/select-org');
@@ -20,7 +21,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 
   const lists = await db.list.findMany({
     where: {
-      boardId: params.boardId,
+      boardId,
       board: {
         orgId,
       },
@@ -28,7 +29,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
     include: {
       cards: {
         orderBy: {
-          order: 'asc', // Position
+          order: 'asc',
         },
       },
     },
@@ -39,7 +40,7 @@ const BoardIdPage = async ({ params }: BoardIdPageProps) => {
 
   return (
     <div className="p-4 h-full overflow-x-auto">
-      <ListContainer boardId={params.boardId} data={lists} />
+      <ListContainer boardId={boardId} data={lists} />
     </div>
   );
 };

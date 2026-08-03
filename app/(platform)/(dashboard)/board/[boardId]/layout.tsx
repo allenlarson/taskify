@@ -1,5 +1,5 @@
 import { db } from '@/lib/db';
-import { auth } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs/server';
 import { notFound, redirect } from 'next/navigation';
 
 import { BoardNavbar } from './_components/board-navbar';
@@ -7,9 +7,10 @@ import { BoardNavbar } from './_components/board-navbar';
 export async function generateMetadata({
   params,
 }: {
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) {
-  const { orgId } = auth();
+  const { boardId } = await params;
+  const { orgId } = await auth();
 
   if (!orgId) {
     return {
@@ -19,7 +20,7 @@ export async function generateMetadata({
 
   const board = await db.board.findUnique({
     where: {
-      id: params.boardId,
+      id: boardId,
       orgId,
     },
   });
@@ -34,9 +35,10 @@ const BoardIdLayout = async ({
   params,
 }: {
   children: React.ReactNode;
-  params: { boardId: string };
+  params: Promise<{ boardId: string }>;
 }) => {
-  const { orgId } = auth();
+  const { boardId } = await params;
+  const { orgId } = await auth();
 
   if (!orgId) {
     redirect('/select-org');
@@ -44,7 +46,7 @@ const BoardIdLayout = async ({
 
   const board = await db.board.findUnique({
     where: {
-      id: params.boardId,
+      id: boardId,
       orgId,
     },
   });
